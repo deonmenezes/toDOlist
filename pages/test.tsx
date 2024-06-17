@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Input} from "@nextui-org/react";
+import { Button, CheckboxGroup, Input} from "@nextui-org/react";
 import { v4 as uuid } from 'uuid';
 import { ToDoObject } from "./ToDoList";
 import AllTasks from "@/components/todo/AllTasks";
@@ -7,7 +7,6 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import Navigation from "@/components/todo/navigation";
 import Footing from "@/components/todo/footer";
-import TaskAlligner from "@/components/todo/taskAlligned";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,7 +21,12 @@ const firebaseConfig = {
   appId: "1:164091742470:web:5c627a9626807e61f0f687",
   measurementId: "G-6F23CR0VQY"
 };
-
+const func = () => {
+  return (
+    <div >
+       you&apos;re free
+      </div>
+  )}
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const getStaticProps = async () => {
@@ -36,15 +40,35 @@ export const getStaticProps = async () => {
 const TestPage: React.FC<{ ninjas: ToDoObject[] }> = ({ ninjas }) => {
 
   const [todo, setTodo] = useState<string>('');
-  const [todos, setTodos] = useState<ToDoObject[]>(ninjas); // Initialize todos with ninjas
+  const [todos, setTodos] = useState<ToDoObject[]>(ninjas); 
+  const [isEditing, setIsEditing] = useState<string | null>(null);
+  const [editText, setEditText] = useState('');// Initialize todos with ninjas
   
+
   const addTodo = () => {
   if (todo.trim() !== '') {
   setTodos([...todos, { id: uuid(), title: todo, completed: false }]);
   setTodo("");
   }
   };
+  const markTodoDone = (id: string) => {
+    setTodos(todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo));
+  };
 
+  const handleEditClick = (id: string, title: string) => {
+    setIsEditing(id);
+    setEditText(title);
+  };
+
+  const handleSaveClick = (id: string) => {
+    setTodos(todos.map(todo => todo.id === id ? { ...todo, title: editText } : todo));
+    setIsEditing(null);
+    setEditText('');
+  };
+
+  const handleDeleteClick = (id: string) => {
+    setTodos(todos.filter(todo => todo.id !== id));
+  };
 
 
   return (
@@ -77,9 +101,112 @@ const TestPage: React.FC<{ ninjas: ToDoObject[] }> = ({ ninjas }) => {
         </div>
       </div>
 
-      <AllTasks ninjas={todos} />
+      <div className="dacoo">
+      <div className="flex flex-col gap-3">
+        <CheckboxGroup label="All Tasks" color="warning">
+          {todos.map(todo => (
+            <li
+              key={todo.id}
+              onClick={() => markTodoDone(todo.id)}
+              className={`${todo.completed ? 'line-through' : 'no-underline'}`}
+            >
+              {isEditing === todo.id ? (
+                <input
+                  type="text"
+                  value={editText}
+                  onChange={(e) => setEditText(e.target.value)}
+                  className="edit-input"
+                />
+              ) : (
+                <span>{todo.title}</span>
+              )}
+              {isEditing === todo.id ? (
+                <Button
+                  className="glow-on-hover"
+                  color="primary"
+                  onClick={() => handleSaveClick(todo.id)}
+                >
+                  Save
+                </Button>
+              ) : (
+                <Button
+                  className="glow-on-hover"
+                  color="primary"
+                  onClick={() => handleEditClick(todo.id, todo.title)}
+                >
+                  Edit
+                </Button>
+              )}
+              <Button
+                className="delete"
+                onClick={() => handleDeleteClick(todo.id)}
+              >
+                Delete
+              </Button>
+            </li>
+          ))}
+        </CheckboxGroup>
+      </div>
+    </div>
 
-      <TaskAlligner ninjas={todos}></TaskAlligner>
+    <div className="task_alligned">
+            <div className="taskRemaining">
+            <CheckboxGroup label="Tasks Remaining" color="danger">
+                {todos.filter(todo => !todo.completed).map(todo => (
+                <li
+                    key={todo.id}
+                    onClick={() => markTodoDone(todo.id)}
+                    className={`${todo.completed ? 'line-through' : 'no-underline'}`}
+                >
+                    {isEditing === todo.id ? (
+                    <input
+                        type="text"
+                        value={editText}
+                        onChange={(e) => setEditText(e.target.value)}
+                        className="edit-input"
+                    />
+                    ) : (
+                    <span>{todo.title}</span>
+                    )}
+                    {isEditing === todo.id ? (
+                    <Button
+                        className="glow-on-hover"
+                        color="primary"
+                        onClick={() => handleSaveClick(todo.id)}
+                    >
+                        Save
+                    </Button>
+                    ) : (
+                    <Button
+                        className="glow-on-hover"
+                        color="primary"
+                        onClick={() => handleEditClick(todo.id, todo.title)}
+                    >
+                        Edit
+                    </Button>
+                    )}
+                    <Button
+                    className="delete"
+                    onClick={() => handleDeleteClick(todo.id)}
+                    >
+                    delete
+                    </Button>
+                </li>
+                ))}
+            </CheckboxGroup>
+            </div>
+
+            <div className="taskCompleted">
+            <CheckboxGroup label="Tasks Completed" color="success">
+                {todos.filter(todo => todo.completed).map(todo => (
+                <div key={todo.id}>
+                    <input type="checkbox" checked={todo.completed} readOnly />
+                    <span>{todo.title}</span>
+                </div>
+                ))}
+            </CheckboxGroup>
+            </div>
+        </div>
 
       <div className="save">
         <Button
