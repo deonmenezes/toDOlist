@@ -25,5 +25,5 @@ export default function Home() {
 }
 
 function Login() {
-  return <div className='login_Button'><Button color="primary" onClick={() => signIn('google')}>Login</Button></div>;
+  return <div className='login_Button'><Button color="primary" onClick={() => signIn('google')}>Google Login</Button></div>;
 }
