@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, CheckboxGroup } from "@nextui-org/react";
+import { ToDoObject } from "@/pages/ToDoList";
 
 const AllTasks: React.FC<{ ninjas: ToDoObject[] }> = ({ ninjas }) => {
   const [todos, setTodos] = useState<ToDoObject[]>(ninjas);
@@ -32,7 +33,6 @@ const AllTasks: React.FC<{ ninjas: ToDoObject[] }> = ({ ninjas }) => {
           {todos.map(todo => (
             <li
               key={todo.id}
-              onClick={() => markTodoDone(todo.id)}
               className={`${todo.completed ? 'line-through' : 'no-underline'}`}
             >
               {isEditing === todo.id ? (

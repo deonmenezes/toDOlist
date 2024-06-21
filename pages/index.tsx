@@ -1,27 +1,12 @@
-// components/RootLayout.tsx or RootLayout.js
-import { authOptions } from './api/auth/[...nextauth]';
-import { getServerSession } from 'next-auth';
-import { Inter } from 'next/font/google';
-import SessionProvider from './SessionProvider';
-import Login from './Login';
-import Home from './page'; // Ensure correct import
+"use client";
 
-const inter = Inter({ subsets: ['latin'] });
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  const session = await getServerSession(authOptions);
-
+const Index = () => {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <SessionProvider session={session}>
-          {!session ? <Login /> : <Home />}
-        </SessionProvider>
-      </body>
-    </html>
+    <>
+      <h1>Hello</h1>
+    </>
   );
-}
+};
+
+export default Index;
