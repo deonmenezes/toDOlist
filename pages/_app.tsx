@@ -26,5 +26,3 @@ export const fonts = {
   sans: fontSans.style.fontFamily,
   mono: fontMono.style.fontFamily,
 };
-
-
