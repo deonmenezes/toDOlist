@@ -33,7 +33,6 @@ const AllTasks: React.FC<{ ninjas: ToDoObject[] }> = ({ ninjas }) => {
           {todos.map(todo => (
             <li
               key={todo.id}
-              onClick={() => markTodoDone(todo.id)}
               className={`${todo.completed ? 'line-through' : 'no-underline'}`}
             >
               {isEditing === todo.id ? (
