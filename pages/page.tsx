@@ -6,7 +6,7 @@ import {
   RecaptchaVerifier,
   signInWithPhoneNumber,
 } from "firebase/auth";
-import { auth } from "./firebase.config";
+import { auth } from "../config/firebase.config";
 import { useRouter } from "next/navigation";
 import { Button } from "@nextui-org/button";
 
