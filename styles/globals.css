@@ -4,6 +4,22 @@
 
 body {
   background-image: linear-gradient(to right, #ffa62f, #ffa62f);
+  
+}
+.login_body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #e0914c;
+  font-family: sans-serif;
+}
+
+.react-tel-input .form-control {
+  color: black;
 }
 .center {
   display: flex;
@@ -14,11 +30,18 @@ body {
   margin: 10px;
 }
 
+  
 label {
-  font-family: "Dancing Script", sans-serif;
-
-  font-size: xx-large;
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  text-align: left;
+  color: #555;
+  font-weight: bold;
 }
+
+
 h1 {
   font-family: "Sevillana", cursive;
   font-size: 46px;
@@ -174,7 +197,36 @@ button {
 }
 
 .login_Button {
-  display: grid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: sans-serif;
+    line-height: 1.5;
+    min-height: 100vh;
+    flex-direction: column;
+    margin: 0;
+}
+
+.wrap {
+  display: flex;
   justify-content: center;
   align-items: center;
+}
+.main {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  padding: 10px 20px;
+  transition: transform 0.2s;
+  width: 500px;
+  text-align: center;
+}
+.input_login{
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
