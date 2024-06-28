@@ -8,6 +8,11 @@ import {
 } from "@nextui-org/react";
 import { signOut } from "next-auth/react";
 const Navigation = () => {
+  const handleLogout = () => {
+    signOut();
+    window.location.href = 'http://localhost:3000/page'; // This will navigate to localhost:3000/page
+  };
+
   return (
     <>
       <Navbar className="david">
@@ -33,7 +38,7 @@ const Navigation = () => {
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem className="hidden lg:flex">
-            <Button color="primary" onClick={() => signOut()}>
+            <Button color="primary" onClick={handleLogout}>
               LogOut
             </Button>
           </NavbarItem>
